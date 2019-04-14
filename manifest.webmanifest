@@ -1,0 +1,8 @@
+{
+  "background_color": "white",
+  "description": "Split.",
+  "display": "fullscreen",
+  "name": "Split",
+  "short_name": "Split",
+  "start_url": "/index.html"
+}
