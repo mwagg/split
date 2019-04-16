@@ -1,0 +1,15 @@
+{
+  "background_color": "purple",
+  "description": "Split money.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "icons/split.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "name": "Split",
+  "short_name": "Split",
+  "start_url": "/"
+}
