@@ -5631,11 +5631,6 @@ var author$project$Money$addDigit = F2(
 		var amount = _n0.b;
 		return A2(author$project$Money$Money, currency, (amount * 10) + digit);
 	});
-var author$project$Money$dropDigit = function (_n0) {
-	var currency = _n0.a;
-	var amount = _n0.b;
-	return A2(author$project$Money$Money, currency, (amount / 10) | 0);
-};
 var author$project$Main$update = F2(
 	function (msg, state) {
 		if (state.$ === 'SplittingAmount') {
@@ -5650,12 +5645,9 @@ var author$project$Main$update = F2(
 							settings,
 							A2(author$project$Money$addDigit, digit, money)),
 						elm$core$Platform$Cmd$none);
-				case 'DropDigit':
+				case 'ClearAmount':
 					return _Utils_Tuple2(
-						A2(
-							author$project$Main$SplittingAmount,
-							settings,
-							author$project$Money$dropDigit(money)),
+						A2(author$project$Main$SplittingAmount, settings, author$project$Money$zero),
 						elm$core$Platform$Cmd$none);
 				default:
 					return _Utils_Tuple2(state, elm$core$Platform$Cmd$none);
@@ -11551,7 +11543,7 @@ var author$project$Main$header = A2(
 var author$project$Main$AddDigit = function (a) {
 	return {$: 'AddDigit', a: a};
 };
-var author$project$Main$DropDigit = {$: 'DropDigit'};
+var author$project$Main$ClearAmount = {$: 'ClearAmount'};
 var mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
 		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
@@ -11741,7 +11733,7 @@ var author$project$Main$inputView = function () {
 								]),
 							mdgriffith$elm_ui$Element$none),
 							makeDigitButton(0),
-							A2(makeButton, '<', author$project$Main$DropDigit)
+							A2(makeButton, 'C', author$project$Main$ClearAmount)
 						]))
 				])));
 }();
@@ -16840,7 +16832,7 @@ var author$project$Main$main = elm$browser$Browser$document(
 		update: author$project$Main$update,
 		view: author$project$Main$view
 	});
-_Platform_export({'Main':{'init':author$project$Main$main(elm$json$Json$Decode$value)({"versions":{"elm":"0.19.0"},"types":{"message":"Main.Msg","aliases":{},"unions":{"Main.Msg":{"args":[],"tags":{"AddDigit":["Basics.Int"],"DropDigit":[],"UpdateSettings":["Main.PersonOrder","Main.Field","String.String"],"SaveSettings":[]}},"Main.Field":{"args":[],"tags":{"Name":[],"Contribution":[]}},"Main.PersonOrder":{"args":[],"tags":{"First":[],"Second":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"String.String":{"args":[],"tags":{"String":[]}}}}})}});
+_Platform_export({'Main':{'init':author$project$Main$main(elm$json$Json$Decode$value)({"versions":{"elm":"0.19.0"},"types":{"message":"Main.Msg","aliases":{},"unions":{"Main.Msg":{"args":[],"tags":{"AddDigit":["Basics.Int"],"ClearAmount":[],"UpdateSettings":["Main.PersonOrder","Main.Field","String.String"],"SaveSettings":[]}},"Main.Field":{"args":[],"tags":{"Name":[],"Contribution":[]}},"Main.PersonOrder":{"args":[],"tags":{"First":[],"Second":[]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"String.String":{"args":[],"tags":{"String":[]}}}}})}});
 
 //////////////////// HMR BEGIN ////////////////////
 
@@ -17434,7 +17426,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46335" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40007" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
