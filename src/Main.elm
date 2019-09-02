@@ -89,7 +89,7 @@ type Field
 
 type Msg
     = AddDigit Int
-    | DropDigit
+    | ClearAmount
     | UpdateSettings PersonOrder Field String
     | SaveSettings
 
@@ -102,8 +102,8 @@ update msg state =
                 AddDigit digit ->
                     ( SplittingAmount settings <| Money.addDigit digit money, Cmd.none )
 
-                DropDigit ->
-                    ( SplittingAmount settings <| Money.dropDigit money, Cmd.none )
+                ClearAmount ->
+                    ( SplittingAmount settings <| Money.zero, Cmd.none )
 
                 _ ->
                     ( state, Cmd.none )
@@ -334,7 +334,7 @@ inputView =
             [ makeDigitRow [ 1, 2, 3 ]
             , makeDigitRow [ 4, 5, 6 ]
             , makeDigitRow [ 7, 8, 9 ]
-            , makeRow [ el [ width fill ] Element.none, makeDigitButton 0, makeButton "<" DropDigit ]
+            , makeRow [ el [ width fill ] Element.none, makeDigitButton 0, makeButton "C" ClearAmount ]
             ]
 
 
