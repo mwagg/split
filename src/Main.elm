@@ -296,13 +296,25 @@ totalView money =
 splitView : Settings -> Money -> Element Msg
 splitView settings money =
     let
-        ( personOne, personTwo ) =
+        ( personOneAmount, personTwoAmount ) =
             Money.split settings.personOne.contribution settings.personTwo.contribution money
     in
     row
         (rowStyles [ height (fillPortion 1) ])
-        [ el [ width fill, Font.center ] <| text (Money.toString personOne)
-        , el [ width fill, Font.center ] <| text (Money.toString personTwo)
+        [ personSplitView settings.personOne.name personOneAmount
+        , personSplitView settings.personTwo.name personTwoAmount
+        ]
+
+
+personSplitView : String -> Money -> Element msg
+personSplitView name amount =
+    let
+        attrs =
+            [ width fill, Font.center ]
+    in
+    column [ width fill ]
+        [ el attrs <| text name
+        , el attrs <| text (Money.toString amount)
         ]
 
 
