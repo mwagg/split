@@ -22,6 +22,7 @@ import Element
         , height
         , htmlAttribute
         , padding
+        , paddingEach
         , px
         , rgb
         , rgb255
@@ -184,42 +185,15 @@ body inner =
         inner
 
 
-headerBackgroundColor : Color
-headerBackgroundColor =
-    rgb255 120 144 156
-
-
-headerColor : Color
-headerColor =
-    rgb255 240 240 240
-
-
 black : Color
 black =
     rgb255 0 0 0
 
 
-header : Element msg
-header =
-    el
-        [ height (px 56)
-        , width fill
-        , Font.glow black 4
-        , Font.bold
-        , Font.size 22
-        , padding 18
-        , Font.center
-        , Font.color headerColor
-        , Background.color headerBackgroundColor
-        ]
-        (text "Split")
-
-
 mainView : Settings -> Money -> Element Msg
 mainView settings money =
     column [ height fill, width fill ]
-        [ header
-        , totalView money
+        [ totalView money
         , splitView settings money
         , inputView
         ]
@@ -340,8 +314,15 @@ inputView =
         makeDigitRow digits =
             makeRow <|
                 List.map makeDigitButton digits
+
+        edges =
+            { top = 20
+            , right = 0
+            , bottom = 20
+            , left = 0
+            }
     in
-    el (rowStyles [ height (fillPortion 2) ]) <|
+    el (rowStyles [ height (fillPortion 2), paddingEach edges ]) <|
         column [ width fill, height fill ]
             [ makeDigitRow [ 1, 2, 3 ]
             , makeDigitRow [ 4, 5, 6 ]
