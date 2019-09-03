@@ -11737,17 +11737,6 @@ var author$project$Main$inputView = function () {
 						]))
 				])));
 }();
-var author$project$Money$split = F3(
-	function (firstSplit, secondSplit, _n0) {
-		var currency = _n0.a;
-		var amount = _n0.b;
-		var ratio = firstSplit / (firstSplit + secondSplit);
-		var firstAmount = elm$core$Basics$ceiling(amount * ratio);
-		var secondAmount = amount - firstAmount;
-		return _Utils_Tuple2(
-			A2(author$project$Money$Money, currency, firstAmount),
-			A2(author$project$Money$Money, currency, secondAmount));
-	});
 var author$project$Money$currencyToString = function (currency) {
 	return '£';
 };
@@ -11760,11 +11749,48 @@ var author$project$Money$toString = function (_n0) {
 	var fractionalStr = (fractional < 10) ? ('0' + elm$core$String$fromInt(fractional)) : elm$core$String$fromInt(fractional);
 	return author$project$Money$currencyToString(currency) + (elm$core$String$fromInt(integer) + ('.' + fractionalStr));
 };
+var author$project$Main$personSplitView = F2(
+	function (name, amount) {
+		var attrs = _List_fromArray(
+			[
+				mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill),
+				mdgriffith$elm_ui$Element$Font$center
+			]);
+		return A2(
+			mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill)
+				]),
+			_List_fromArray(
+				[
+					A2(
+					mdgriffith$elm_ui$Element$el,
+					attrs,
+					mdgriffith$elm_ui$Element$text(name)),
+					A2(
+					mdgriffith$elm_ui$Element$el,
+					attrs,
+					mdgriffith$elm_ui$Element$text(
+						author$project$Money$toString(amount)))
+				]));
+	});
+var author$project$Money$split = F3(
+	function (firstSplit, secondSplit, _n0) {
+		var currency = _n0.a;
+		var amount = _n0.b;
+		var ratio = firstSplit / (firstSplit + secondSplit);
+		var firstAmount = elm$core$Basics$ceiling(amount * ratio);
+		var secondAmount = amount - firstAmount;
+		return _Utils_Tuple2(
+			A2(author$project$Money$Money, currency, firstAmount),
+			A2(author$project$Money$Money, currency, secondAmount));
+	});
 var author$project$Main$splitView = F2(
 	function (settings, money) {
 		var _n0 = A3(author$project$Money$split, settings.personOne.contribution, settings.personTwo.contribution, money);
-		var personOne = _n0.a;
-		var personTwo = _n0.b;
+		var personOneAmount = _n0.a;
+		var personTwoAmount = _n0.b;
 		return A2(
 			mdgriffith$elm_ui$Element$row,
 			author$project$Main$rowStyles(
@@ -11775,24 +11801,8 @@ var author$project$Main$splitView = F2(
 					])),
 			_List_fromArray(
 				[
-					A2(
-					mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill),
-							mdgriffith$elm_ui$Element$Font$center
-						]),
-					mdgriffith$elm_ui$Element$text(
-						author$project$Money$toString(personOne))),
-					A2(
-					mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill),
-							mdgriffith$elm_ui$Element$Font$center
-						]),
-					mdgriffith$elm_ui$Element$text(
-						author$project$Money$toString(personTwo)))
+					A2(author$project$Main$personSplitView, settings.personOne.name, personOneAmount),
+					A2(author$project$Main$personSplitView, settings.personTwo.name, personTwoAmount)
 				]));
 	});
 var mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
@@ -17426,7 +17436,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40007" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43469" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
